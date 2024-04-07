@@ -53,10 +53,12 @@ class Translator {
         let replacement = this.returnTranslation(value.charAt(0).toUpperCase() + value.slice(1));
         translation = translation.replace(regex, replacement);
         });
-    
-        const timeRegex = /(\d{1,2}):(\d{2})/g;
+        let timeRegex;
+        locale === 'american-to-british' ? timeRegex = /(\d{1,2}):(\d{2})/g : timeRegex = /(\d{1,2}).(\d{2})/g
         translation = translation.replace(timeRegex, (match, p1, p2) => {
-        return `${p1}.${p2}`;
+            let replaceT;
+            locale === 'american-to-british' ? replaceT = `${p1}.${p2}` : replaceT = `${p1}:${p2}`
+            return this.returnTranslation(replaceT);
         });
     
         return translation === text ? { text, translation: 'Everything looks good to me!' } : { text, translation };
