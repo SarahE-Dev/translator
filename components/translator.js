@@ -10,6 +10,11 @@ class Translator {
         this.americanToBritishTitles = americanToBritishTitles;
         this.britishOnly = britishOnly;
     }
+
+    returnTranslation(translation) {
+        return '<span class="highlight">' + translation + '</span>';
+
+    }
     
     translate(text, locale) {
         if(text == ""){
@@ -37,13 +42,16 @@ class Translator {
         }
     
         Object.entries(dictionary).forEach(([key, value]) => {
+        let replacement = this.returnTranslation(value);
         const regex = new RegExp(`\\b${key}\\b`, 'gi');
-        translation = translation.replace(regex, value);
+        translation = translation.replace(regex, replacement);
+        
         });
     
         Object.entries(titles).forEach(([key, value]) => {
         const regex = new RegExp(`\\b${key}\\b`, 'gi');
-        translation = translation.replace(regex, value.charAt(0).toUpperCase() + value.slice(1));
+        let replacement = this.returnTranslation(value.charAt(0).toUpperCase() + value.slice(1));
+        translation = translation.replace(regex, replacement);
         });
     
         const timeRegex = /(\d{1,2}):(\d{2})/g;
