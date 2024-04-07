@@ -9,5 +9,9 @@ module.exports = function (app) {
   app.route('/api/translate')
     .post((req, res) => {
       
+      const { text, locale } = req.body;
+      
+      const translation = translator.translate(text, locale);
+      res.send(translation);
     });
 };
