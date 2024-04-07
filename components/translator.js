@@ -49,8 +49,8 @@ class Translator {
         });
     
         Object.entries(titles).forEach(([key, value]) => {
-        const regex = new RegExp(`\\b${key}\\b`, 'gi');
-        let replacement = this.returnTranslation(value.charAt(0).toUpperCase() + value.slice(1));
+        let replacement = this.returnTranslation(value);
+        const regex = new RegExp(key, 'gi');
         translation = translation.replace(regex, replacement);
         });
         let timeRegex;
@@ -61,7 +61,7 @@ class Translator {
             return this.returnTranslation(replaceT);
         });
     
-        return translation === text ? { text, translation: 'Everything looks good to me!' } : { text, translation };
+        return translation.length === text.length ? { text, translation: 'Everything looks good to me!' } : { text, translation };
     }
 }
 
